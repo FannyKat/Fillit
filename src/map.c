@@ -32,14 +32,22 @@ void	puton_topleft(char *tab_tetri[26][4], char map[42][42], int x, int y)
 {
 	int		i;
 	int		j;
+	char	**tetri;
 
 	i = 0;
-	j = 0;
-	while (tab_tetri[0][j])
+	tetri = tab_tetri[0];
+	while (tetri[i])
 	{
-		map[x][y] = *tab_tetri[0][j];
-		j++;
-		y++;
+		j = 0;
+		y = 0;
+		while (tetri[i][j])
+		{
+			map[x][y] = tetri[i][j];
+			j++;
+			y++;
+		}
+		i++;
+		x++;
 	}
 }
 
@@ -51,7 +59,6 @@ void	resolve(char *tab_tetri[26][4])
 	size = 4;
 	(void)tab_tetri;
 	for_map(map, size, &putdot_to_map);
-//	for_map(map, size, &print_char);
-//	puton_topleft(&tab_tetri[0], map, 0, 0);
+	puton_topleft(&tab_tetri[0], map, 0, 0);
 	for_map(map, size, &print_char);	
 }
