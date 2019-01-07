@@ -36,18 +36,26 @@ void	puton_topleft(char *tab_tetri[26][4], char map[42][42], int x, int y)
 
 	i = 0;
 	tetri = tab_tetri[0];
-	while (tetri[i])
+	while (i < 5 && tetri[i])
 	{
 		j = 0;
 		y = 0;
 		while (tetri[i][j])
 		{
-			map[x][y] = tetri[i][j];
+			if (tetri[i][j] == '#')
+			{
+				map[x][y] = tetri[i][j];
+				if (i < 3 && x < 3 && tetri[i + 1][j] == '#')
+				{
+					map[x + 1][y] = tetri[i + 1][j];
+					i++;
+					x++;
+				}
+				y++;
+			}
 			j++;
-			y++;
 		}
 		i++;
-		x++;
 	}
 }
 
