@@ -1,12 +1,7 @@
 #include "../include/fillit.h"
 
-void	error(int ac)
+void	error(void)
 {
-	if (ac != 2)
-	{
-		write(1, "usage: ./fillit source_file\n", 28);
-		exit (EXIT_FAILURE);
-	}
 	write(1, "Error\n", 6);
 	exit (EXIT_FAILURE);
 }
@@ -22,9 +17,13 @@ int		main(int ac, char **av)
 
 	i = 1;
 	j = 0;
-	error(ac);	
+	if (ac != 2)
+	{
+		write(1, "usage: ./fillit source_file\n", 28);
+		return (0);
+	}
 	if ((fd = open(av[1], O_RDONLY)) < 0)
-		error(ac);	
+		error();	
 	while (j < 26 && read(fd, buffer, 5) > 0)
 	{
 		buffer[5] = 0;
@@ -40,20 +39,20 @@ int		main(int ac, char **av)
 				else if (ret > 0)
 				{
 					if (buffer[0] != '\n')
-						error(ac);
+						error();
 				}
 				i = 1;
 				j++;
 				continue ;
 			}
 			else
-				error(ac);	
+				error();	
 		}
 		i++;
 	}
 	resolve(tab_tetri);
 	if (i != 4)
-		error(ac);
+		error();
 	close(fd);
 	return (0);
 }
