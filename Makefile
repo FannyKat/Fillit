@@ -1,5 +1,5 @@
 NAME			= fillit
-FLAGS			+= -Wall -Werror -Wextra
+FLAGS			+= -Wall -Wextra
 
 LIB_PATH		=	libft
 LIB			=	$(LIB_PATH)/libft.a
@@ -9,7 +9,7 @@ INC_DIR			= include
 INC			= -I $(LIB_PATH) -I $(INC_DIR)
 
 SRC_DIR			= src
-SRC				= init.c check.c map.c
+SRC			= init.c check.c map.c normalize.c solve.c to_resolve.c 
 SRCS			= $(addprefix $(SRC_DIR)/, $(SRC))
 
 OBJ_DIR			= obj

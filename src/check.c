@@ -1,28 +1,27 @@
 #include "../include/fillit.h"
 
-static int 	has_no_neighbors(char **tetri, int i, int j)
+static int 		count_neighbors(char **tetri, int i, int j, int n)
 {
-	int		n;
-
-	n = 0;
 	if (j < 3 && tetri[i][j + 1] == '#')
-		return (0);
+		n++;
 	if (j > 0 && tetri[i][j - 1] == '#')
-		return (0);
+		n++;
 	if (i > 0 && tetri[i - 1][j] == '#')
-		return (0);
+		n++;	
 	if (i < 3 && tetri[i + 1][j] == '#')
-		return (0);
-	return (1);
+		n++;
+	return (n);
 }
 
-static int	has_four_pieces(char **tetri)
+static int		has_four_pieces(char **tetri)
 {
 	int		i;
 	int		j;
+	int		n;
 	int		count;
 	
 	count = 0;
+	n = 0;
 	i = 0;
 	while (i < 4 && tetri[i])
 	{
@@ -32,22 +31,21 @@ static int	has_four_pieces(char **tetri)
 			if (tetri[i][j] == '#')
 			{
 				count++;
-				if (has_no_neighbors(tetri, i, j) == 1)
-					return (0);
+				n = count_neighbors(tetri, i, j, n);
 			}
 			j++;
 		}
 		i++;
 	}
-	if (count == 4)
+	if (count == 4 && (n == 6 || n == 8))
 		return (1);
 	return (0);
 }
 
-int		valid_tetrimino(char **tetri)
+int			valid_tetrimino(char **tetri)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (i < 4 && tetri[i])

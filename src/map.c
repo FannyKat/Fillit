@@ -1,72 +1,70 @@
 #include "../include/fillit.h"
 
-void	putdot_to_map(char map[42][42], int x, int y)
+int			map_size(int tetri_nbr)
 {
-	map[x][y] = '.';
+	t_etri 	data;
+
+	data.area = 2;
+	while ((data.area * data.area) < tetri_nbr)
+		data.area++;
+	return (data.area);
 }
 
-void	print_char(char map[42][42], int x, int y)
-{
-	write(1, &map[x][y], 1);
-}
-
-void	for_map(char map[42][42], int size, void (*f)(char map[42][42], int x, int y))
-{
-	int	x;
-	int	y;
-
-	x = -1;
-	while (++x < size)
-	{
-		y = -1;
-		while (++y < size)
-		{
-			f(map, x, y);
-		}
-		if (f == &print_char)
-			ft_putchar('\n');
-	}
-}
-
-void	puton_topleft(char *tab_tetri[26][4], char map[42][42], int x, int y)
+void			display_box(t_point tetri_set[26][4], int tetri_nbr, int x, int y)
 {
 	int		i;
 	int		j;
-	char	**tetri;
+	char		c;
 
 	i = 0;
-	tetri = tab_tetri[0];
-	while (i < 5 && tetri[i])
+	c = 'A';
+	while (i <= tetri_nbr)
 	{
 		j = 0;
-		y = 0;
-		while (tetri[i][j])
+		while (j < 4)
 		{
-			if (tetri[i][j] == '#')
+			if (tetri_set[i][j].x == x && tetri_set[i][j].y == y)
 			{
-				map[x][y] = tetri[i][j];
-				if (i < 3 && x < 3 && tetri[i + 1][j] == '#')
-				{
-					map[x + 1][y] = tetri[i + 1][j];
-					i++;
-					x++;
-				}
-				y++;
+				c = i + 'A';
+				ft_putchar(c);
+				return ;
 			}
 			j++;
 		}
 		i++;
 	}
+	ft_putchar('.');
 }
 
-void	resolve(char *tab_tetri[26][4])
+void			display(t_point tetri_set[26][4], int tetri_nbr, int area)
 {
-	char	map[42][42];
-	int		size;
+	int		x;
+	int		y;
 
-	size = 4;
-	(void)tab_tetri;
-	for_map(map, size, &putdot_to_map);
-	puton_topleft(&tab_tetri[0], map, 0, 0);
-	for_map(map, size, &print_char);	
+	y = 0;
+	while (y < area)
+	{
+		x = 0;
+		while (x < area)
+		{
+			display_box(tetri_set, tetri_nbr, x, y);	
+			x++;
+		}
+		y++;
+		ft_putchar('\n');
+	}
+}
+
+void			resolve(char *tab_tetri[26][4], int tetri_nbr)
+{
+	t_point		tab[26][4];
+	t_point		vect_it;	
+	t_etri		data;
+
+	vect_it.x = 0;
+	vect_it.y = 0;
+	data.current = 0;
+	data.area = map_size((tetri_nbr + 1) * 4);
+	get_coord(tab_tetri, tab, tetri_nbr);
+	find_solution(tab, tetri_nbr, vect_it, data);
 }
