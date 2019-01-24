@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   to_resolve.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcatusse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/22 10:08:06 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/01/22 13:24:10 by fcatusse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/fillit.h"
 
 void		set_tetri(t_point set[4], t_point ref[4], t_point vect_it)
@@ -23,7 +35,7 @@ void		delete_last(t_point tetri_set[4])
 		tetri_set[j].x = 0;
 		tetri_set[j].y = 0;
 		j++;
-	}	
+	}
 }
 
 t_point		vect_zero(t_point vect_it)
@@ -33,10 +45,18 @@ t_point		vect_zero(t_point vect_it)
 	return (vect_it);
 }
 
-t_point		last_vect(t_point vect_it, t_etri data, t_point set[26][4], t_point ref[26][4])
+t_point		last_vect(t_point vect_it, t_etri data, t_point set[26][4],
+															t_point ref[26][4])
 {
 	vect_it.x = (set[data.current][0].x - ref[data.current][0].x) + 1;
 	vect_it.y = set[data.current][0].y;
 	delete_last(set[data.current]);
+	return (vect_it);
+}
+
+t_point		clean(t_point tetri_set[4], t_point vect_it)
+{
+	delete_last(tetri_set);
+	vect_it = vect_zero(vect_it);
 	return (vect_it);
 }

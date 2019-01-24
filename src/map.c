@@ -1,20 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcatusse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/22 10:05:05 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/01/24 16:11:02 by fcatusse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/fillit.h"
 
 int			map_size(int tetri_nbr)
 {
-	t_etri 	data;
+	t_etri data;
 
 	data.area = 2;
-	while ((data.area * data.area) < tetri_nbr)
+	while (data.area * data.area < tetri_nbr)
 		data.area++;
 	return (data.area);
 }
 
-void			display_box(t_point tetri_set[26][4], int tetri_nbr, int x, int y)
+void		display_box(t_point tetri_set[26][4], int tetri_nbr, int x, int y)
 {
 	int		i;
 	int		j;
-	char		c;
+	char	c;
 
 	i = 0;
 	c = 'A';
@@ -36,7 +48,7 @@ void			display_box(t_point tetri_set[26][4], int tetri_nbr, int x, int y)
 	ft_putchar('.');
 }
 
-void			display(t_point tetri_set[26][4], int tetri_nbr, int area)
+void		display(t_point tetri_set[26][4], int tetri_nbr, int area)
 {
 	int		x;
 	int		y;
@@ -47,7 +59,7 @@ void			display(t_point tetri_set[26][4], int tetri_nbr, int area)
 		x = 0;
 		while (x < area)
 		{
-			display_box(tetri_set, tetri_nbr, x, y);	
+			display_box(tetri_set, tetri_nbr, x, y);
 			x++;
 		}
 		y++;
@@ -55,16 +67,16 @@ void			display(t_point tetri_set[26][4], int tetri_nbr, int area)
 	}
 }
 
-void			resolve(char *tab_tetri[26][4], int tetri_nbr)
+void		resolve(char *tab_tetri[26][4], int tetri_nbr)
 {
-	t_point		tab[26][4];
-	t_point		vect_it;	
-	t_etri		data;
+	t_point	tab[26][4];
+	t_point	vect_it;
+	t_etri	data;
 
 	vect_it.x = 0;
 	vect_it.y = 0;
 	data.current = 0;
-	data.area = map_size((tetri_nbr + 1) * 4);
 	get_coord(tab_tetri, tab, tetri_nbr);
+	data.area = map_size((tetri_nbr + 1) * 4);
 	find_solution(tab, tetri_nbr, vect_it, data);
 }

@@ -1,25 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcatusse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/22 10:06:03 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/01/23 12:34:00 by fcatusse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/fillit.h"
 
-static int 		count_neighbors(char **tetri, int i, int j, int n)
+int			count_neighbors(char **tetri, int i, int j, int n)
 {
 	if (j < 3 && tetri[i][j + 1] == '#')
 		n++;
 	if (j > 0 && tetri[i][j - 1] == '#')
 		n++;
 	if (i > 0 && tetri[i - 1][j] == '#')
-		n++;	
+		n++;
 	if (i < 3 && tetri[i + 1][j] == '#')
 		n++;
 	return (n);
 }
 
-static int		has_four_pieces(char **tetri)
+int			has_four_pieces(char **tetri)
 {
 	int		i;
 	int		j;
 	int		n;
 	int		count;
-	
+
 	count = 0;
 	n = 0;
 	i = 0;
@@ -51,7 +63,7 @@ int			valid_tetrimino(char **tetri)
 	while (i < 4 && tetri[i])
 	{
 		j = 0;
-		while (tetri[i][j])
+		while (j < 5 && tetri[i][j])
 		{
 			if (tetri[i][j] != '.' && tetri[i][j] != '#' && tetri[i][j] != '\n')
 				return (0);

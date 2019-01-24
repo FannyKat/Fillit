@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   normalize.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcatusse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/22 10:06:55 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/01/22 20:24:17 by fcatusse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/fillit.h"
 
-void			normalize(t_point tetri[4], t_point min)
+void		normalize(t_point tetri[4], t_point min)
 {
 	int		j;
 
@@ -8,15 +20,15 @@ void			normalize(t_point tetri[4], t_point min)
 	while (++j < 4)
 	{
 		tetri[j].x -= min.x;
-		tetri[j].y -= min.y;	
+		tetri[j].y -= min.y;
 	}
 }
 
-void			norm_coord(t_point tab[26][4], int tetri_nbr)
+void		norm_coord(t_point tab[26][4], int tetri_nbr)
 {
 	int		i;
 	int		j;
-	t_point		min;
+	t_point	min;
 
 	i = 0;
 	while (i <= tetri_nbr)
@@ -36,7 +48,7 @@ void			norm_coord(t_point tab[26][4], int tetri_nbr)
 	}
 }
 
-void			get_coord(char *tab_tetri[26][4], t_point tab[26][4], int tetri_nbr)
+void		get_coord(char *tab_tetri[26][4], t_point tab[26][4], int tetri_nbr)
 {
 	int		i;
 	int		j;
@@ -55,7 +67,7 @@ void			get_coord(char *tab_tetri[26][4], t_point tab[26][4], int tetri_nbr)
 			{
 				if (tab_tetri[i][j][k] == '#')
 				{
-					tab[i][c].x = k;	
+					tab[i][c].x = k;
 					tab[i][c].y = j;
 					c++;
 				}
