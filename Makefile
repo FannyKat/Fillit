@@ -1,50 +1,30 @@
 NAME			= fillit
-FLAGS			+= -Wall -Wextra
+CFLAGS			= -Wall -Wextra -Werror -I include/.
 
 LIB_PATH		=	libft
-LIB			=	$(LIB_PATH)/libft.a
-LIB_LINK		=	-L $(LIB_PATH) -lft
+LIB				=	$(LIB_PATH)/libft.a
 
-INC_DIR			= include
-INC			= -I $(LIB_PATH) -I $(INC_DIR)
+SRC				= src/init.c src/check.c src/map.c src/normalize.c \
+				  src/solve.c src/to_resolve.c
 
-SRC_DIR			= src
-SRC			= init.c check.c map.c normalize.c solve.c to_resolve.c 
-SRCS			= $(addprefix $(SRC_DIR)/, $(SRC))
+OBJ				= $(SRC:.c=.o)
 
-OBJ_DIR			= obj
-OBJS			= $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+CC				= gcc
 
-CLEAR			= \033[2K
-NOCOLOR			= \033[0m
-YELLOW			= \033[1;33m
-BLUE			= \033[1;34m
+all:			$(NAME)
 
-all: obj $(NAME)
-
-$(NAME): $(LIB) $(OBJS)
-	@gcc $(FLAGS) -o $@ $^ $(LIB_LINK)
-	@echo "[$(YELLOW) $(NAME) $(NOCOLOR)]"
-
-$(LIB):
-	@make -C $(LIB_PATH)
-obj:
-	@mkdir -p obj
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/*.h
-	@gcc $(FLAGS) $(INC) -c -o $@ $<
-	@echo "[$(YELLOW) $< $(NOCOLOR)]"
+$(NAME): 		$(OBJ)
+				@make -C $(LIB_PATH)
+				@$(CC) $(CFLAGS) $(SRC) $(LIB) -o $(NAME)
 
 clean:
-	@rm -f $(OBJS)
-	@rm -rf $(OBJ_DIR)
-	@echo -e "$(CLEAR)$(BLUE)Clean fillit_obj$(NOCOLOR)"
+				@rm -f $(OBJ)
+				@make -C $(LIB_PATH) clean
 
-fclean: clean
-	@rm -f $(NAME)
-	@make -C $(LIB_PATH) fclean
-	@echo -e "$(CLEAR)$(BLUE)Clean fillit$(NOCOLOR)"
+fclean: 		clean
+				@rm -f $(NAME)
+				@make -C $(LIB_PATH) fclean
 
-re: fclean all
+re: 			fclean all
 
-.PHONY: all clean fclean re
+.PHONY: 		all clean fclean re
